@@ -148,24 +148,29 @@ const processedMissions = computed(() => {
   const status = profile.value.missionStatus || {}
   return missions.value.map((mission) => {
     let isCompleted = false
+    let currentCount = 0
     if (mission.code === '每日簽到') {
       if (date.isSameDate(new Date(status.lastLoginDate), new Date(), 'day')) {
         isCompleted = true
+        currentCount = 1
       }
     }
     if (mission.code === '發文') {
-      if ((status.dailyPostCount || 0) >= mission.dailyLimit) {
+      currentCount = status.dailyPostCount
+      if (currentCount >= mission.dailyLimit) {
         isCompleted = true
       }
     }
     if (mission.code === '新增食譜') {
-      if ((status.dailyRecipeCount || 0) >= mission.dailyLimit) {
+      currentCount = status.dailyRecipeCount
+      if (currentCount >= mission.dailyLimit) {
         isCompleted = true
       }
     }
     return {
       ...mission,
       isCompleted,
+      currentCount,
     }
   })
 })
@@ -173,7 +178,7 @@ const processedMissions = computed(() => {
 const missionProgress = computed(() => {
   if (processedMissions.value.length === 0) return 0
   return (
-    processedMissions.value.filter((t) => t.isCompleted).length / processedMissions.value.length
+    processedMissions.value.filter((m) => m.isCompleted).length / processedMissions.value.length
   )
 })
 

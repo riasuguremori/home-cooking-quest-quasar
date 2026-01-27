@@ -81,14 +81,21 @@
             />
             <q-icon name="emoji_events" color="purple-2" size="md" />
           </div>
-          <div class="text-overline text-grey-7 q-mt-md">每日任務牆</div>
-          <div class="row items-baseline q-mb-sm">
+          <div class="text-overline text-grey-7 q-mt-md">任務完成率</div>
+          <div class="row items-baseline">
             <div class="text-h4 text-weight-bolder">
               {{ Math.round(missionProgress * 100) }}
             </div>
             <div class="text-subtitle1 text-grey text-weight-normal q-ml-xs">%</div>
           </div>
+        </q-card-section>
+      </q-card>
+    </div>
 
+    <div class="col-12">
+      <q-card flat class="stat-card q-pa-sm">
+        <q-card-section>
+          <div class="text-overline text-grey-7 q-mt-md">每日任務牆</div>
           <div class="q-gutter-y-xs q-mt-sm">
             <div v-for="mission in missions" :key="mission.name" class="row items-center">
               <q-icon
@@ -100,8 +107,16 @@
               <span
                 class="text-caption"
                 :class="mission.isCompleted ? 'text-grey-5' : 'text-grey-8'"
-                >{{ mission.name }}</span
-              >
+                >{{ mission.name }}
+              </span>
+
+              <q-space></q-space>
+
+              <span
+                class="text-caption"
+                :class="mission.isCompleted ? 'text-grey-5' : 'text-grey-8'"
+                >{{ mission.currentCount }}/{{ mission.dailyLimit }}
+              </span>
             </div>
           </div>
         </q-card-section>
