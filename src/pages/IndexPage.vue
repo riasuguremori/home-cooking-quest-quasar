@@ -18,54 +18,21 @@
       <q-carousel-slide name="style" class="column no-wrap flex-center q-pa-none relative-position">
         <q-img src="@/assets/banner01.webp" class="absolute-full" fit="cover" />
 
-        <div class="absolute-full flex column flex-center bg-dark-gradient">
+        <div class="absolute-full flex column flex-center">
           <div class="text-h2 text-weight-bold q-mb-md text-shadow">探索私房美味</div>
-          <div class="text-h5 q-mb-xl opacity-80">超過 1,000 道精選食譜等你發掘</div>
+          <div class="text-h5 q-px-md q-mb-xl opacity-80 bg-dark-gradient">
+            超過 1,000+ 道精選食譜等你發掘
+          </div>
         </div>
       </q-carousel-slide>
     </q-carousel>
   </div>
 
-  <div class="row q-col-gutter-lg q-mb-xl">
-    <div class="col-12 col-md-4" v-for="feature in features" :key="feature.to">
-      <q-card
-        class="rounded-xl no-shadow cursor-pointer hover-card full-height relative-position overflow-hidden bg-white"
-        v-ripple
-        @click="handleLinkClick(feature)"
-      >
-        <q-card-section class="q-pa-lg row items-center justify-between">
-          <div class="col-8 z-top">
-            <div class="text-h6 text-weight-bolder text-grey-9 q-mb-xs">{{ feature.title }}</div>
-            <div class="text-caption text-grey-6" style="line-height: 1.4">{{ feature.desc }}</div>
+  <FeatureSection />
 
-            <div class="q-mt-md text-primary text-weight-bold row items-center text-caption">
-              前往查看 <q-icon name="arrow_forward" class="q-ml-xs transition-icon" />
-            </div>
-          </div>
+  <DailySelection />
 
-          <div class="col-auto">
-            <q-avatar
-              size="64px"
-              font-size="32px"
-              color="orange-1"
-              text-color="primary"
-              :icon="feature.icon"
-              class="shadow-1"
-            />
-          </div>
-
-          <div
-            class="absolute-right"
-            style="opacity: 0.05; right: -20px; bottom: -20px; pointer-events: none"
-          >
-            <q-icon :name="feature.icon" size="140px" color="primary" />
-          </div>
-        </q-card-section>
-      </q-card>
-    </div>
-  </div>
-
-  <div class="q-mb-xl">
+  <div class="q-my-xl q-py-xl">
     <q-card class="rounded-xl no-shadow overflow-hidden bg-white">
       <div class="row">
         <div class="col-12 col-md-6 relative-position">
@@ -128,70 +95,22 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useQuasar } from 'quasar'
-import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/user'
+import DailySelection from '@/components/DailySelection.vue'
+import FeatureSection from '@/components/FeatureSection.vue'
 
 const slide = ref('style')
-const $q = useQuasar()
-const router = useRouter()
-const user = useUserStore()
-
-const features = [
-  {
-    title: '精選食譜',
-    icon: 'menu_book',
-    desc: '探索超過千道私房料理與烘焙靈感',
-    to: '/recipes',
-    requiresAuth: false,
-  },
-  {
-    title: '廚藝論壇',
-    icon: 'forum',
-    desc: '與大廚們交流心得，分享你的烹飪故事',
-    to: '/articles',
-    requiresAuth: false,
-  },
-  {
-    title: '會員中心',
-    icon: 'manage_accounts',
-    desc: '管理個人資料、查看積分與收藏紀錄',
-    to: '/userProfile',
-    requiresAuth: true,
-  },
-]
-
-const handleLinkClick = (feature) => {
-  // 檢查是否需要登入權限
-  if (feature.requiresAuth && !user.isLoggedIn) {
-    $q.notify({
-      color: 'warning',
-      message: '請先登入',
-      icon: 'warning',
-      position: 'bottom',
-    })
-    return // 阻擋導航
-  }
-
-  // 通過檢查，進行頁面跳轉
-  router.push(feature.to)
-}
 </script>
 
 <style lang="scss">
-/* 讓文字有陰影，在淺色圖片上也看得清楚 */
+/* 讓文字有陰影 */
 .text-shadow {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* 漸層遮罩，讓文字更凸顯 */
 .bg-dark-gradient {
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.7) 0%,
-    rgba(0, 0, 0, 0.2) 50%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f76e19 0%, #ff9f43 100%);
+  text-align: center;
 }
 
 /* 毛玻璃效果背景 */
@@ -203,28 +122,6 @@ const handleLinkClick = (feature) => {
 /* 調整透明度 */
 .opacity-80 {
   opacity: 0.8;
-}
-
-/* 卡片懸停效果 */
-.hover-card {
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  border: 1px solid transparent;
-}
-
-.hover-card:hover {
-  transform: translateY(-5px); /* 輕微上浮 */
-  box-shadow: 0 12px 24px rgba(255, 107, 0, 0.15) !important; /* 橘色系柔和陰影 */
-}
-
-/* 讓箭頭在 hover 時會移動 */
-.hover-card:hover .transition-icon {
-  transform: translateX(4px);
-}
-
-/* 確保層級正確 (文字在裝飾圖之上) */
-.z-top {
-  z-index: 1;
-  position: relative;
 }
 
 /* 讓文字區塊在大螢幕上有足夠的呼吸感 */
@@ -247,6 +144,37 @@ const handleLinkClick = (feature) => {
   /* 手機版標題字體縮小 */
   .text-h3 {
     font-size: 2rem !important;
+  }
+}
+
+/* 文字跳動動畫 */
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+.bounce-text {
+  animation: bounce 2s infinite;
+}
+
+/* 背景漸層流動動畫 */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
   }
 }
 </style>

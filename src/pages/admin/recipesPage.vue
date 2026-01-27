@@ -51,6 +51,18 @@
               :rules="[(val) => !!val || '請輸入食譜名稱']"
             />
 
+            <div class="row items-center q-mt-md">
+              <div class="text-subtitle1 q-mr-md">難易度</div>
+              <q-rating
+                v-model="form.rating"
+                max="5"
+                size="2em"
+                color="orange"
+                icon="star_border"
+                icon-selected="star"
+              />
+            </div>
+
             <div class="text-h6 q-mt-lg">封面</div>
             <q-img
               v-if="form.image.length === 0 && form.existingImage"
@@ -285,6 +297,7 @@ const getEmptyForm = () => ({
   image: [],
   rawImage: [],
   existingImage: null, // 用來存舊圖網址顯示用
+  rating: 0,
   nutrition: [{ calories: 0, protein: 0, fat: 0, carbs: 0, netCarbs: 0 }],
 })
 
@@ -420,6 +433,7 @@ const submit = async () => {
     'nutrition',
     'category',
     'unlockPrice',
+    'rating',
     'status',
   ]
   formKeys.forEach((key) => {

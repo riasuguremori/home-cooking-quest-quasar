@@ -9,6 +9,7 @@ export const useUserStore = defineStore(
     const role = ref('user')
     const token = ref('')
     const points = ref(0)
+    const pointLog = ref([])
 
     const isLoggedIn = computed(() => token.value.length > 0)
     const isAdmin = computed(() => role.value === 'admin')
@@ -18,6 +19,7 @@ export const useUserStore = defineStore(
       role.value = data.role
       points.value = data.points
       _id.value = data._id
+      pointLog.value = data.pointLog
 
       if (data.token) {
         token.value = data.token
@@ -30,6 +32,7 @@ export const useUserStore = defineStore(
       token.value = ''
       points.value = 0
       _id.value = ''
+      pointLog.value = []
     }
 
     return {
@@ -42,6 +45,7 @@ export const useUserStore = defineStore(
       login,
       logout,
       points,
+      pointLog,
     }
   },
   {

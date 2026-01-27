@@ -40,6 +40,13 @@
         </q-input>
 
         <div class="row justify-end">
+          <q-btn
+            type="button"
+            flat
+            label="註冊"
+            color="primary"
+            @click="router.push('/register')"
+          />
           <q-btn label="登入" flat type="submit" color="primary" :loading="isSubmitting" />
         </div>
       </q-form>
@@ -60,10 +67,8 @@ import { useUserStore } from '@/stores/user'
 const $q = useQuasar()
 const router = useRouter()
 const user = useUserStore()
-
 // 控制密碼顯示/隱藏的狀態
 const isPwdVisible = ref(false)
-
 const schema = yup.object({
   account: yup
     .string()

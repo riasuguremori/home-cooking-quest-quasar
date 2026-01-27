@@ -13,6 +13,18 @@
             :rules="[(val) => !!val || '請輸入食譜名稱']"
           />
 
+          <div class="row items-center q-mt-md">
+            <div class="text-subtitle1 q-mr-md">難易度</div>
+            <q-rating
+              v-model="form.rating"
+              max="5"
+              size="2em"
+              color="orange"
+              icon="star_border"
+              icon-selected="star"
+            />
+          </div>
+
           <div class="text-h6 q-mt-lg">封面</div>
           <q-img
             v-if="form.image.length === 0 && form.existingImage"
@@ -144,7 +156,6 @@
             </div>
           </div>
 
-          <!-- DYNAMIC STEPS -->
           <div class="q-py-md">
             <div class="text-h6 q-mb-sm">步驟</div>
             <div v-for="(step, index) in form.steps" :key="index">
@@ -220,7 +231,7 @@
 </template>
 
 <script setup>
-import { ref, useTemplateRef } from 'vue'
+import { ref, useTemplateRef, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import recipeService from '@/services/recipe'
 import { useUserStore } from '@/stores/user'
@@ -249,13 +260,20 @@ const getEmptyForm = () => ({
   image: [],
   rawImage: [],
   existingImage: null,
+  rating: 0,
   nutrition: [{ calories: 0, protein: 0, fat: 0, carbs: 0, netCarbs: 0 }],
 })
 
 const form = ref(getEmptyForm())
 
 const categoryOptions = ['中式', '日式', '西式', '甜點', '其他']
-const statusOptions = ['草稿', '發佈', '隱藏']
+const statusOptions = computed(() => {
+  const options = ['草稿', '發佈']
+  if (user.isAdmin) {
+    options.push('隱藏')
+  }
+  return options
+})
 
 const addIngredient = () => {
   form.value.ingredients.push({ name: '', quantity: '' })
@@ -285,9 +303,7 @@ const open = (recipe) => {
   dialog.value.open = true
   if (recipe) {
     dialog.value.id = recipe._id
-
     const tempForm = JSON.parse(JSON.stringify(recipe))
-
     form.value = {
       ...tempForm,
       image: [],
@@ -349,6 +365,7 @@ const submit = async () => {
     'nutrition',
     'category',
     'unlockPrice',
+    'rating',
     'status',
   ]
   formKeys.forEach((key) => {

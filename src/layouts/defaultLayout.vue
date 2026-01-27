@@ -32,6 +32,48 @@
             />
           </template>
 
+          <q-btn
+            v-if="user.isLoggedIn"
+            round
+            flat
+            icon="notifications"
+            color="grey-7"
+            @click="clearUnread"
+          >
+            <q-badge color="red" floating v-if="unreadCount > 0" rounded>{{ unreadCount }}</q-badge>
+            <q-menu>
+              <q-list style="min-width: 300px; max-height: 400px" class="scroll">
+                <q-item-label header>通知</q-item-label>
+                <div v-if="sortedPointLogs.length === 0" class="q-pa-md text-center text-grey">
+                  暫無通知
+                </div>
+                <template v-for="log in sortedPointLogs" :key="log._id">
+                  <q-item>
+                    <q-item-section avatar>
+                      <q-icon
+                        :name="log.type === '獲得' ? 'check_circle' : 'lock_open'"
+                        :color="log.type === '獲得' ? 'green' : 'deep-orange'"
+                      />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>{{ log.title }}</q-item-label>
+                      <q-item-label caption>{{ log.description }}</q-item-label>
+                      <q-item-label caption class="text-grey-5">{{
+                        date.formatDate(log.createdAt, 'YYYY/MM/DD HH:mm')
+                      }}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <span :class="log.type === '獲得' ? 'text-green' : 'text-deep-orange'">
+                        {{ log.type === '獲得' ? '+' : '-' }}{{ log.amount }}
+                      </span>
+                    </q-item-section>
+                  </q-item>
+                  <q-separator inset />
+                </template>
+              </q-list>
+            </q-menu>
+          </q-btn>
+
           <q-chip
             v-if="user.isLoggedIn"
             class="bg-primary text-white text-weight-bold q-px-md"
@@ -173,8 +215,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { date } from 'quasar'
 import serviceUser from '@/services/user'
 import { useUserStore } from '@/stores/user'
 
@@ -187,17 +230,56 @@ const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
+const sortedPointLogs = computed(() => {
+  if (!user.pointLog) return []
+  const lastRead = localStorage.getItem('lastReadLogDate')
+  const lastReadDate = lastRead ? new Date(lastRead) : new Date(0)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  return [...user.pointLog]
+    .filter((log) => {
+      const logDate = new Date(log.createdAt)
+      return logDate >= today || logDate > lastReadDate
+    })
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+})
+
+const unreadCount = ref(0)
+
+watch(
+  () => user.pointLog,
+  (newLogs) => {
+    if (!newLogs) return
+    const lastRead = localStorage.getItem('lastReadLogDate')
+    if (!lastRead) {
+      unreadCount.value = newLogs.length
+    } else {
+      unreadCount.value = newLogs.filter(
+        (log) => new Date(log.createdAt) > new Date(lastRead),
+      ).length
+    }
+  },
+  { immediate: true, deep: true },
+)
+
+const clearUnread = () => {
+  unreadCount.value = 0
+  if (sortedPointLogs.value.length > 0) {
+    localStorage.setItem('lastReadLogDate', sortedPointLogs.value[0].createdAt)
+  }
+}
+
 const navs = computed(() => [
+  { title: '精選食譜', to: '/recipes', icon: 'menu_book', show: true },
+  { title: '廚藝論壇', to: '/articles', icon: 'forum', show: true },
+  { title: '登入', to: '/login', icon: 'mdi-login', show: !user.isLoggedIn },
   {
     title: '會員中心',
     to: '/userProfile',
     icon: 'mdi-account',
     show: user.isLoggedIn && !user.isAdmin,
   },
-  { title: '食譜', to: '/recipes', icon: 'mdi-cookie', show: true },
-  { title: '論壇', to: '/articles', icon: 'mdi-book-open', show: true },
-  { title: '註冊', to: '/register', icon: 'mdi-account-plus', show: !user.isLoggedIn },
-  { title: '登入', to: '/login', icon: 'mdi-login', show: !user.isLoggedIn },
   { title: '管理', to: '/admin', icon: 'mdi-cog', show: user.isLoggedIn && user.isAdmin },
 ])
 
@@ -219,10 +301,10 @@ const logout = async () => {
 }
 
 .text-primary {
-  color: #ff6b00 !important;
+  color: #ff8c42 !important;
 }
 .bg-primary {
-  background-color: #ff6b00 !important;
+  background-color: #ff8c42 !important;
 }
 
 .search-input .q-field__control {

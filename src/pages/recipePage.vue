@@ -22,18 +22,8 @@
             <q-icon name="close" @click="search = ''" class="cursor-pointer q-pr-md" />
           </template>
         </q-input>
-        <q-btn
-          color="primary"
-          icon="add"
-          label="新增食譜"
-          rounded
-          unelevated
-          @click="openDialog(null)"
-        />
       </div>
     </div>
-    
-    <RecipeDialog ref="recipeDialogRef" @saved="getRecipe" />
 
     <div class="row justify-center q-gutter-sm q-mb-xl">
       <q-btn
@@ -82,19 +72,12 @@ import recipeService from '@/services/recipe'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import RecipeCard from '@/components/RecipeCard.vue'
-import RecipeDialog from '@/components/RecipeDialog.vue'
 
 const search = ref('')
 const activeCategory = ref('All')
 const recipes = ref([])
 const router = useRouter()
 const $q = useQuasar()
-
-const recipeDialogRef = ref(null)
-
-const openDialog = (recipe) => {
-  recipeDialogRef.value.open(recipe)
-}
 
 const getRecipeInfo = (id) => {
   if (!id) {
@@ -146,7 +129,6 @@ const getRecipe = async () => {
     })
   }
 }
-
 getRecipe()
 
 // 篩選邏輯

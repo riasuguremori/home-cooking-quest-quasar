@@ -24,11 +24,25 @@
           >{{ recipe.free }}</q-chip
         >
       </div>
+      <slot name="image-overlay"></slot>
     </q-img>
 
     <q-card-section class="q-pa-md">
       <div class="text-h6 text-weight-bold q-mb-xs ellipsis text-grey-9">
         {{ recipe.name }}
+      </div>
+
+      <div class="row items-center q-mb-sm">
+        <span class="text-caption text-grey-7 q-mr-sm">難易度</span>
+        <q-rating
+          :model-value="recipe.rating"
+          max="5"
+          size="1.5em"
+          color="orange"
+          icon="star_border"
+          icon-selected="star"
+          readonly
+        />
       </div>
 
       <div class="row items-center q-gutter-x-md text-grey-6 text-caption q-mb-md">
@@ -64,6 +78,8 @@
 <script setup>
 import { useUserStore } from '@/stores/user'
 
+const user = useUserStore()
+
 defineProps({
   recipe: {
     type: Object,
@@ -72,8 +88,6 @@ defineProps({
 })
 
 defineEmits(['click'])
-
-const user = useUserStore()
 </script>
 
 <style scoped>
