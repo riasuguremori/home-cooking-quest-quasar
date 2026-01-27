@@ -59,5 +59,3 @@ defineProps({
 
 defineEmits(['update:search', 'click-recipe'])
 </script>
-
-<style lang="sass" scoped></style>

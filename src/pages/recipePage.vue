@@ -100,21 +100,6 @@ const categories = [
   { label: '其他', icon: 'category' },
 ]
 
-const formatTimeAgo = (value) => {
-  if (!value) return ''
-  const date = new Date(value)
-  const now = new Date()
-  const seconds = Math.floor((now - date) / 1000)
-  if (seconds < 60) return '剛剛'
-  const minutes = Math.floor(seconds / 60)
-  if (minutes < 60) return `${minutes} 分鐘前`
-  const hours = Math.floor(minutes / 60)
-  if (hours < 24) return `${hours} 小時前`
-  const days = Math.floor(hours / 24)
-  if (days < 30) return `${days} 天前`
-  return date.toLocaleDateString()
-}
-
 const getRecipe = async () => {
   try {
     const { data } = await recipeService.getPublicRecipes()
@@ -134,24 +119,16 @@ getRecipe()
 // 篩選邏輯
 const filteredRecipes = computed(() => {
   if (!recipes.value) return []
-  return recipes.value
-    .filter((recipe) => {
-      // 搜尋字串篩選 (不分大小寫)
-      const matchesSearch = recipe.name.toLowerCase().includes(search.value.toLowerCase())
+  return recipes.value.filter((recipe) => {
+    // 搜尋字串篩選 (不分大小寫)
+    const matchesSearch = recipe.name.toLowerCase().includes(search.value.toLowerCase())
 
-      // 2. 分類篩選
-      const matchesCategory =
-        activeCategory.value === 'All' || recipe.category === activeCategory.value
+    // 2. 分類篩選
+    const matchesCategory =
+      activeCategory.value === 'All' || recipe.category === activeCategory.value
 
-      return matchesSearch && matchesCategory
-    })
-    .map((recipe) => ({
-      ...recipe,
-      badge: recipe.isOfficial ? '官方推薦' : '',
-      free: recipe.isUnlocked ? 'Free' : '',
-      badgeColor: recipe.badgeColor || 'positive',
-      timeAgo: formatTimeAgo(recipe.createdAt),
-    }))
+    return matchesSearch && matchesCategory
+  })
 })
 </script>
 

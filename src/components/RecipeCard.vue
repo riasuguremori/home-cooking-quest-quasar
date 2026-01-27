@@ -4,24 +4,24 @@
     @click="$emit('click', recipe._id)"
   >
     <q-img :src="recipe.imageUrl" :ratio="4 / 3" class="col-grow">
-      <div v-if="recipe.badge" class="absolute-top-left q-pa-none bg-transparent">
+      <div v-if="badge" class="absolute-top-left q-pa-none bg-transparent">
         <q-chip
-          :color="recipe.badgeColor"
+          :color="badgeColor"
           text-color="white"
           size="sm"
           class="q-ma-md text-weight-bold text-uppercase shadow-2"
           v-if="recipe.isOfficial"
-          >{{ recipe.badge }}
+          >{{ badge }}
         </q-chip>
       </div>
-      <div v-if="recipe.badge" class="absolute-top-right q-pa-none bg-transparent">
+      <div v-if="free" class="absolute-top-right q-pa-none bg-transparent">
         <q-chip
-          :color="recipe.badgeColor"
+          :color="badgeColor"
           text-color="white"
           size="sm"
           class="q-ma-md text-weight-bold text-uppercase shadow-2"
           v-if="recipe.isUnlocked"
-          >{{ recipe.free }}</q-chip
+          >{{ free }}</q-chip
         >
       </div>
       <slot name="image-overlay"></slot>
@@ -48,7 +48,7 @@
       <div class="row items-center q-gutter-x-md text-grey-6 text-caption q-mb-md">
         <div class="row items-center">
           <q-icon name="schedule" class="q-mr-xs text-orange-8" />
-          {{ recipe.timeAgo }}
+          {{ timeAgo }}
         </div>
       </div>
 
@@ -63,7 +63,7 @@
       <div class="row items-center justify-between" :class="{ 'opacity-50': recipe.locked }">
         <div class="row items-center">
           <q-avatar size="28px" class="q-mr-sm shadow-1">
-            <img :src="`https://api.dicebear.com/9.x/thumbs/svg?seed=${user.account}`" />
+            <img :src="`https://api.dicebear.com/9.x/thumbs/svg?seed=${recipe.author.account}`" />
           </q-avatar>
           <span class="text-weight-medium text-caption text-grey-8">{{
             recipe.author?.account || '匿名'
@@ -76,11 +76,9 @@
 </template>
 
 <script setup>
-import { useUserStore } from '@/stores/user'
+import { computed } from 'vue'
 
-const user = useUserStore()
-
-defineProps({
+const props = defineProps({
   recipe: {
     type: Object,
     required: true,
@@ -88,6 +86,26 @@ defineProps({
 })
 
 defineEmits(['click'])
+
+const formatTimeAgo = (value) => {
+  if (!value) return ''
+  const date = new Date(value)
+  const now = new Date()
+  const seconds = Math.floor((now - date) / 1000)
+  if (seconds < 60) return '剛剛'
+  const minutes = Math.floor(seconds / 60)
+  if (minutes < 60) return `${minutes} 分鐘前`
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours} 小時前`
+  const days = Math.floor(hours / 24)
+  if (days < 30) return `${days} 天前`
+  return date.toLocaleDateString()
+}
+
+const badge = computed(() => (props.recipe.isOfficial ? '官方推薦' : ''))
+const free = computed(() => (props.recipe.isUnlocked ? 'Free' : ''))
+const badgeColor = computed(() => props.recipe.badgeColor || 'positive')
+const timeAgo = computed(() => formatTimeAgo(props.recipe.createdAt))
 </script>
 
 <style scoped>
