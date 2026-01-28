@@ -18,7 +18,7 @@
     </div>
 
     <div v-if="recipes && recipes.length > 0" class="row q-col-gutter-md q-pa-md">
-      <div class="col-12 col-sm-6 col-md-4" v-for="recipe in recipes" :key="recipe._id">
+      <div class="col-12 col-sm-6 col-md-3" v-for="recipe in recipes" :key="recipe._id">
         <RecipeCard :recipe="recipe" @click="$emit('click-recipe', recipe._id)">
           <template #image-overlay>
             <slot name="image-overlay" :recipe="recipe"></slot>

@@ -296,7 +296,7 @@ const openCommentDialog = async (article) => {
 
 // 漸層背景
 .bg-gradient-orange
-  background: linear-gradient(135deg, #f57c00 0%, #e64a19 100%)
+  background: linear-gradient(135deg, #ff8c42 0%, #f57c00 100%)
 
 .rounded-borders
   border-radius: 16px !important

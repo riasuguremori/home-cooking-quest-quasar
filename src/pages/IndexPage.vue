@@ -38,7 +38,7 @@
         <div class="col-12 col-md-6 relative-position">
           <q-img
             src="@/assets/banner02.webp"
-            class="absolute-full"
+            :class="{ 'absolute-full': $q.screen.gt.sm }"
             style="min-height: 400px"
             fit="cover"
           >
@@ -95,9 +95,11 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useQuasar } from 'quasar'
 import DailySelection from '@/components/DailySelection.vue'
 import FeatureSection from '@/components/FeatureSection.vue'
 
+const $q = useQuasar()
 const slide = ref('style')
 </script>
 

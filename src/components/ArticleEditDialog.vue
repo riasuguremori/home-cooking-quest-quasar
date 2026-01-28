@@ -139,7 +139,7 @@ const onSubmit = async () => {
   if (form.value.image.some((file) => file.error))
     return $q.notify({ message: '主圖片格式不符或檔案過大', color: 'negative' })
   if (!props.id && form.value.image.length === 0)
-    return $q.notify({ message: '請上傳主圖片', color: 'negative' })
+    return $q.notify({ message: '請上傳圖片', color: 'negative' })
 
   const fd = new FormData()
   fd.append('title', form.value.title)

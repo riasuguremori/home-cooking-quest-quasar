@@ -81,9 +81,9 @@ const navs = [
 }
 
 .text-primary {
-  color: #ff6b00 !important;
+  color: #ff8c42 !important;
 }
 .bg-primary {
-  background-color: #ff6b00 !important;
+  background-color: #ff8c42 !important;
 }
 </style>

@@ -14,7 +14,9 @@
 
         <div class="row items-center cursor-pointer q-mr-md" @click="router.push('/')">
           <q-icon name="soup_kitchen" color="primary" size="32px" class="q-mr-sm" />
-          <div class="text-h6 text-weight-bold text-primary tracking-wide">私房的料理探索</div>
+          <div class="text-h6 text-weight-bold text-primary tracking-wide text-shadow-title">
+            私房的料理探索
+          </div>
         </div>
 
         <q-space />
@@ -31,6 +33,23 @@
               class="text-weight-medium"
             />
           </template>
+
+          <q-btn v-if="user.isLoggedIn" round flat icon="event_available" color="grey-7">
+            <q-tooltip>簽到紀錄</q-tooltip>
+            <q-menu>
+              <div class="q-pa-md">
+                <div class="text-subtitle1 q-mb-sm text-center text-weight-bold">簽到紀錄</div>
+                <q-date
+                  v-model="today"
+                  :events="signInDates"
+                  event-color="green"
+                  minimal
+                  flat
+                  readonly
+                />
+              </div>
+            </q-menu>
+          </q-btn>
 
           <q-btn
             v-if="user.isLoggedIn"
@@ -122,6 +141,65 @@
               </q-chip>
             </div>
           </div>
+
+          <q-btn v-if="user.isLoggedIn" round flat icon="event_available" color="grey-7">
+            <q-tooltip>簽到紀錄</q-tooltip>
+            <q-menu>
+              <div class="q-pa-md">
+                <div class="text-subtitle1 q-mb-sm text-center text-weight-bold">簽到紀錄</div>
+                <q-date
+                  v-model="today"
+                  :events="signInDates"
+                  event-color="green"
+                  minimal
+                  flat
+                  readonly
+                />
+              </div>
+            </q-menu>
+          </q-btn>
+
+          <q-btn
+            v-if="user.isLoggedIn"
+            round
+            flat
+            icon="notifications"
+            color="grey-7"
+            @click="clearUnread"
+          >
+            <q-badge color="red" floating v-if="unreadCount > 0" rounded>{{ unreadCount }}</q-badge>
+            <q-menu>
+              <q-list style="min-width: 300px; max-height: 400px" class="scroll">
+                <q-item-label header>通知</q-item-label>
+                <div v-if="sortedPointLogs.length === 0" class="q-pa-md text-center text-grey">
+                  暫無通知
+                </div>
+                <template v-for="log in sortedPointLogs" :key="log._id">
+                  <q-item>
+                    <q-item-section avatar>
+                      <q-icon
+                        :name="log.type === '獲得' ? 'check_circle' : 'lock_open'"
+                        :color="log.type === '獲得' ? 'green' : 'deep-orange'"
+                      />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>{{ log.title }}</q-item-label>
+                      <q-item-label caption>{{ log.description }}</q-item-label>
+                      <q-item-label caption class="text-grey-5">{{
+                        date.formatDate(log.createdAt, 'YYYY/MM/DD HH:mm')
+                      }}</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <span :class="log.type === '獲得' ? 'text-green' : 'text-deep-orange'">
+                        {{ log.type === '獲得' ? '+' : '-' }}{{ log.amount }}
+                      </span>
+                    </q-item-section>
+                  </q-item>
+                  <q-separator inset />
+                </template>
+              </q-list>
+            </q-menu>
+          </q-btn>
         </div>
 
         <q-separator color="orange-2" />
@@ -168,7 +246,9 @@
           <div class="col-12 col-md-8">
             <div class="row items-center q-mb-md cursor-pointer">
               <q-icon name="soup_kitchen" color="primary" size="32px" class="q-mr-sm" />
-              <div class="text-h6 text-weight-bold text-primary tracking-wide">私房的料理探索</div>
+              <div class="text-h6 text-weight-bold text-primary tracking-wide text-shadow-title">
+                私房的料理探索
+              </div>
             </div>
             <div class="text-body2 text-grey-6 q-mb-lg" style="line-height: 1.8; max-width: 500px">
               連結每一位熱愛烹飪的靈魂，讓味道成為記憶的載體。加入我們，開啟你的味蕾探險之旅。
@@ -229,6 +309,14 @@ const leftDrawerOpen = ref(false)
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
+const today = ref(new Date().toISOString().slice(0, 10).replace(/-/g, '/'))
+
+const signInDates = computed(() => {
+  return (user.pointLog || [])
+    .filter((log) => log.event === '每日簽到')
+    .map((log) => date.formatDate(log.createdAt, 'YYYY/MM/DD'))
+})
 
 const sortedPointLogs = computed(() => {
   if (!user.pointLog) return []
@@ -296,6 +384,10 @@ const logout = async () => {
 </script>
 
 <style lang="scss">
+.text-shadow-title {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 .bg-cream {
   background-color: #fff8e7;
 }
@@ -303,6 +395,7 @@ const logout = async () => {
 .text-primary {
   color: #ff8c42 !important;
 }
+
 .bg-primary {
   background-color: #ff8c42 !important;
 }
