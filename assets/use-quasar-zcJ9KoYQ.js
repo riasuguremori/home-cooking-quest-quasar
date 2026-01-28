@@ -1,1 +1,0 @@
-import{a1 as a,bH as r}from"./index-BSBz9WEW.js";function u(){return a(r)}export{u};
