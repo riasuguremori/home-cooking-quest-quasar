@@ -15,7 +15,7 @@
       </q-item-section>
 
       <q-item-section side>
-        <q-btn flat round icon="more_horiz">
+        <q-btn flat round icon="more_horiz" v-if="canEdit">
           <q-menu>
             <q-list style="min-width: 100px">
               <q-item clickable v-close-popup @click="$emit('edit', article)">
@@ -111,6 +111,10 @@ const user = useUserStore()
 
 const isLiked = computed(() => {
   return props.article.likes.includes(user._id)
+})
+
+const canEdit = computed(() => {
+  return user.isAdmin || (props.article.author?._id === user._id)
 })
 </script>
 
