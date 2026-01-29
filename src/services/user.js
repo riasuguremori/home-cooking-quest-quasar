@@ -34,4 +34,7 @@ export default {
   getUser: () => {
     return apiAuth.get('/user/getUser')
   },
+  updateLastReadLog: () => {
+    return apiAuth.patch('/user/updateLastReadLog')
+  },
 }

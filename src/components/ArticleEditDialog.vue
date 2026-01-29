@@ -93,6 +93,7 @@
 import { ref, watch, useTemplateRef } from 'vue'
 import { useQuasar } from 'quasar'
 import articleService from '@/services/article'
+import { useUserStore } from 'src/stores/user'
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
@@ -106,6 +107,7 @@ const emit = defineEmits(['update:modelValue', 'saved'])
 const $q = useQuasar()
 const loading = ref(false)
 const mainImageAgent = useTemplateRef('mainImageAgent')
+const user = useUserStore()
 
 const getEmptyForm = () => ({
   title: '',
@@ -150,7 +152,10 @@ const onSubmit = async () => {
 
   try {
     loading.value = true
-    await (props.id ? articleService.updateArticle(props.id, fd) : articleService.createArticle(fd))
+    const { data } = await (props.id
+      ? articleService.updateArticle(props.id, fd)
+      : articleService.createArticle(fd))
+    if (data.log) user.pointLog.push(data.log)
     $q.notify({
       message: props.id ? '文章更新成功' : '文章發布成功',
       color: 'positive',

@@ -113,6 +113,8 @@ const slide = ref('style')
   border-radius: 20px;
   background: linear-gradient(135deg, #f76e19 0%, #ff9f43 100%);
   text-align: center;
+  background-size: 200% 200%;
+  animation: gradientMove 3s ease infinite alternate;
 }
 
 /* 毛玻璃效果背景 */
@@ -147,27 +149,6 @@ const slide = ref('style')
   .text-h3 {
     font-size: 2rem !important;
   }
-}
-
-/* 文字跳動動畫 */
-@keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-20px);
-  }
-  60% {
-    transform: translateY(-10px);
-  }
-}
-
-.bounce-text {
-  animation: bounce 2s infinite;
 }
 
 /* 背景漸層流動動畫 */

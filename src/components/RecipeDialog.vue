@@ -404,7 +404,8 @@ const submit = async () => {
       await recipeService.updateRecipe(dialog.value.id, fd)
       $q.notify({ message: '更新成功', color: 'positive' })
     } else {
-      await recipeService.createRecipe(fd)
+      const { data } = await recipeService.createRecipe(fd)
+      if (data.recipe) user.pointLog.push(data.recipe)
       $q.notify({ message: '新增成功', color: 'positive' })
     }
     closeDialog()

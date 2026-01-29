@@ -320,7 +320,7 @@ const signInDates = computed(() => {
 
 const sortedPointLogs = computed(() => {
   if (!user.pointLog) return []
-  const lastRead = localStorage.getItem('lastReadLogDate')
+  const lastRead = user.lastReadLogDate
   const lastReadDate = lastRead ? new Date(lastRead) : new Date(0)
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -336,10 +336,9 @@ const sortedPointLogs = computed(() => {
 const unreadCount = ref(0)
 
 watch(
-  () => user.pointLog,
-  (newLogs) => {
+  [() => user.pointLog, () => user.lastReadLogDate],
+  ([newLogs, lastRead]) => {
     if (!newLogs) return
-    const lastRead = localStorage.getItem('lastReadLogDate')
     if (!lastRead) {
       unreadCount.value = newLogs.length
     } else {
@@ -351,10 +350,13 @@ watch(
   { immediate: true, deep: true },
 )
 
-const clearUnread = () => {
-  unreadCount.value = 0
-  if (sortedPointLogs.value.length > 0) {
-    localStorage.setItem('lastReadLogDate', sortedPointLogs.value[0].createdAt)
+const clearUnread = async () => {
+  try {
+    const { data } = await serviceUser.updateLastReadLog()
+    user.lastReadLogDate = data.result.lastReadLogDate
+    unreadCount.value = 0
+  } catch (error) {
+    console.log(error)
   }
 }
 
