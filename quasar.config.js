@@ -141,14 +141,19 @@ export default defineConfig((ctx) => {
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
     pwa: {
       workboxMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
-      // swFilename: 'sw.js',
-      // manifestFilename: 'manifest.json',
-      // extendManifestJson (json) {},
-      // useCredentialsForManifestTag: true,
-      // injectPwaMetaTags: false,
-      // extendPWACustomSWConf (esbuildConf) {},
-      // extendGenerateSWOptions (cfg) {},
-      // extendInjectManifestOptions (cfg) {}
+      injectPwaMetaTags: true,
+      swFilename: 'sw.js',
+      manifestFilename: 'manifest.json',
+      useCredentialsForManifestTag: false,
+
+      // 設定 Workbox (對應 VitePWA 的 workbox 設定)
+      extendGenerateSWOptions(cfg) {
+        cfg.skipWaiting = true // 對應 registerType: 'autoupdate'
+        cfg.clientsClaim = true // 對應 registerType: 'autoupdate'
+        cfg.cleanupOutdatedCaches = true
+        cfg.globPatterns = ['**/*']
+        cfg.ignoreURLParametersMatching = [/.*/]
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-cordova-apps/configuring-cordova

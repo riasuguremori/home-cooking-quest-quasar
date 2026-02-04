@@ -20,7 +20,7 @@ jobs:
       - name: Install and Build
         run: |
           npm install
-          npm run build
+          npm run build-pwa
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
       # 步驟三：部署
@@ -28,4 +28,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist/spa
+          folder: dist/pwa

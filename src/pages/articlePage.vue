@@ -107,11 +107,11 @@ import ArticleLeaderboard from '@/components/ArticleLeaderboard.vue'
 
 const categoryOptions = [
   { label: '所有文章', icon: 'feed' },
+  { label: '公告', icon: 'local_fire_department' },
   { label: '閒聊', icon: 'emoji_people' },
   { label: '提問', icon: 'psychology_alt' },
   { label: '分享', icon: 'volunteer_activism' },
   { label: '曬圖', icon: 'camera_enhance' },
-  { label: '公告', icon: 'local_fire_department' },
 ]
 const selectedCategory = ref(categoryOptions[0].label)
 const search = ref('')

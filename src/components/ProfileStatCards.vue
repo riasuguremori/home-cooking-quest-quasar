@@ -79,7 +79,19 @@
               font-size="28px"
               rounded
             />
-            <q-icon name="emoji_events" color="purple-2" size="md" />
+            <div class="row items-center">
+              <q-btn
+                flat
+                round
+                color="purple-8"
+                icon="list_alt"
+                size="sm"
+                @click="showMissions = true"
+              >
+                <q-tooltip>查看每日任務</q-tooltip>
+              </q-btn>
+              <q-icon name="emoji_events" color="purple-2" size="md" />
+            </div>
           </div>
           <div class="text-overline text-grey-7 q-mt-md">任務完成率</div>
           <div class="row items-baseline">
@@ -92,11 +104,17 @@
       </q-card>
     </div>
 
-    <div class="col-12">
-      <q-card flat class="stat-card q-pa-sm">
+    <!-- 每日任務彈窗 -->
+    <q-dialog v-model="showMissions">
+      <q-card style="min-width: 300px; border-radius: 12px">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6 text-weight-bold">每日任務牆</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
         <q-card-section>
-          <div class="text-overline text-grey-7 q-mt-md">每日任務牆</div>
-          <div class="q-gutter-y-xs q-mt-sm">
+          <div class="q-gutter-y-sm">
             <div v-for="mission in missions" :key="mission.name" class="row items-center">
               <q-icon
                 :name="mission.isCompleted ? 'check_circle' : 'radio_button_unchecked'"
@@ -105,7 +123,7 @@
                 class="q-mr-sm"
               />
               <span
-                class="text-caption"
+                class="text-body2"
                 :class="mission.isCompleted ? 'text-grey-5' : 'text-grey-8'"
                 >{{ mission.name }}
               </span>
@@ -121,11 +139,13 @@
           </div>
         </q-card-section>
       </q-card>
-    </div>
+    </q-dialog>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
 defineProps({
   totalPoints: { type: Number, default: 0 },
   savedCount: { type: Number, default: 0 },
@@ -133,6 +153,8 @@ defineProps({
   missionProgress: { type: Number, default: 0 },
   missions: { type: Array, default: () => [] },
 })
+
+const showMissions = ref(false)
 </script>
 
 <style lang="sass" scoped>
