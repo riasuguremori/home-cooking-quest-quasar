@@ -1,0 +1,1 @@
+import{b5 as r,b6 as l}from"./index-Ce1v4YWG.js";const c={createArticle:e=>r.post("/article",e),getAllArticle:()=>l.get("/article/all"),updateArticle:(e,t)=>r.patch("/article/updateArticle/"+e,t),likeArticle:(e,t)=>r.patch("/article/likeArticle/"+e,t),deleteArticle:(e,t)=>r.delete("/article/deleteArticle/"+e,t)};export{c as a};
