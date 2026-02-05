@@ -94,8 +94,8 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useQuasar } from 'quasar'
-import { useUserStore } from '@/stores/user'
-import serviceComment from '@/services/comment'
+import { useUserStore } from 'stores/user'
+import serviceComment from 'src/services/comment'
 
 const props = defineProps({
   recipeId: {

@@ -72,7 +72,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
-import userService from '@/services/user'
+import userService from 'src/services/user'
 
 const $q = useQuasar()
 const users = ref([])

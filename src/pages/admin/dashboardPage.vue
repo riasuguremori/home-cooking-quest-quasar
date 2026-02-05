@@ -71,8 +71,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
-import userService from '@/services/user'
-import recipeService from '@/services/recipe'
+import userService from 'src/services/user'
+import recipeService from 'src/services/recipe'
 
 const $q = useQuasar()
 const totalUsers = ref(0)

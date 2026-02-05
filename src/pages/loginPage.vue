@@ -61,8 +61,8 @@ import { useField, useForm } from 'vee-validate'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import * as yup from 'yup'
-import serviceUser from '@/services/user'
-import { useUserStore } from '@/stores/user'
+import serviceUser from 'src/services/user'
+import { useUserStore } from 'stores/user'
 
 const $q = useQuasar()
 const router = useRouter()

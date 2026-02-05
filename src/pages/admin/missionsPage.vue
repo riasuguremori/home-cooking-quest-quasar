@@ -96,7 +96,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
-import missionService from '@/services/mission'
+import missionService from 'src/services/mission'
 
 const $q = useQuasar()
 const missions = ref([])

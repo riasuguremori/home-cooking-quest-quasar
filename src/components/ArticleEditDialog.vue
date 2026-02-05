@@ -92,8 +92,8 @@
 <script setup>
 import { ref, watch, useTemplateRef } from 'vue'
 import { useQuasar } from 'quasar'
-import articleService from '@/services/article'
-import { useUserStore } from 'src/stores/user'
+import articleService from 'src/services/article'
+import { useUserStore } from 'stores/user'
 
 const props = defineProps({
   modelValue: { type: Boolean, required: true },

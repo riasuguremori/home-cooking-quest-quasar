@@ -114,13 +114,13 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar, date } from 'quasar'
-import userService from '@/services/user'
-import recipeService from '@/services/recipe'
-import missionService from '@/services/mission'
-import RecipeDialog from '@/components/RecipeDialog.vue'
-import PointLogTable from '@/components/PointLogTable.vue'
-import ProfileRecipeList from '@/components/ProfileRecipeList.vue'
-import ProfileStatCards from '@/components/ProfileStatCards.vue'
+import userService from 'src/services/user'
+import recipeService from 'src/services/recipe'
+import missionService from 'src/services/mission'
+import RecipeDialog from 'components/RecipeDialog.vue'
+import PointLogTable from 'components/PointLogTable.vue'
+import ProfileRecipeList from 'components/ProfileRecipeList.vue'
+import ProfileStatCards from 'components/ProfileStatCards.vue'
 
 const router = useRouter()
 const $q = useQuasar()

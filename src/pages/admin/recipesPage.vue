@@ -273,7 +273,7 @@
 <script setup>
 import { ref, useTemplateRef } from 'vue'
 import { useQuasar } from 'quasar'
-import recipeService from '@/services/recipe'
+import recipeService from 'src/services/recipe'
 
 const $q = useQuasar()
 const recipes = ref([])

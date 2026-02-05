@@ -67,7 +67,7 @@ import validator from 'validator'
 import { useField, useForm } from 'vee-validate'
 import { useRouter } from 'vue-router'
 import * as yup from 'yup'
-import serviceUser from '@/services/user'
+import serviceUser from 'src/services/user'
 
 // Quasar 的工具
 const $q = useQuasar()

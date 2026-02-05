@@ -6,8 +6,8 @@ import {
   createWebHashHistory,
 } from 'vue-router'
 import routes from './routes'
-import serviceUser from '@/services/user'
-import { useUserStore } from '@/stores/user'
+import serviceUser from 'src/services/user'
+import { useUserStore } from 'src/stores/user'
 
 /*
  * If not building with SSR mode, you can

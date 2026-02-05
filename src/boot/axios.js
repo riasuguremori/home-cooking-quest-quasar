@@ -1,7 +1,7 @@
 import { defineBoot } from '#q-app/wrappers'
 import axios from 'axios'
-import serviceUser from '@/services/user'
-import { useUserStore } from '@/stores/user'
+import serviceUser from 'src/services/user'
+import { useUserStore } from 'stores/user'
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;

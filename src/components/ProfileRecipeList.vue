@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import RecipeCard from '@/components/RecipeCard.vue'
+import RecipeCard from 'components/RecipeCard.vue'
 
 defineProps({
   recipes: { type: Array, default: () => [] },

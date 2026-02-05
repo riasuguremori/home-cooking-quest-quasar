@@ -45,7 +45,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
-import articleService from '@/services/article'
+import articleService from 'src/services/article'
 
 const $q = useQuasar()
 const articles = ref([])

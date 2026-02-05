@@ -96,7 +96,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from 'stores/user'
 
 const props = defineProps({
   article: {
@@ -114,7 +114,7 @@ const isLiked = computed(() => {
 })
 
 const canEdit = computed(() => {
-  return user.isAdmin || (props.article.author?._id === user._id)
+  return user.isAdmin || props.article.author?._id === user._id
 })
 </script>
 

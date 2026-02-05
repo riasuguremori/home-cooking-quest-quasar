@@ -55,8 +55,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue' // 1. 引入 ref
-import { useUserStore } from '@/stores/user'
+import { ref } from 'vue'
+import { useUserStore } from 'stores/user'
 
 const user = useUserStore()
 

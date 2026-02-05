@@ -298,8 +298,8 @@
 import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { date } from 'quasar'
-import serviceUser from '@/services/user'
-import { useUserStore } from '@/stores/user'
+import serviceUser from 'src/services/user'
+import { useUserStore } from 'stores/user'
 
 const router = useRouter()
 const user = useUserStore()

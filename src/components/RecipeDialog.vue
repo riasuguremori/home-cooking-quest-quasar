@@ -233,8 +233,8 @@
 <script setup>
 import { ref, useTemplateRef, computed } from 'vue'
 import { useQuasar } from 'quasar'
-import recipeService from '@/services/recipe'
-import { useUserStore } from '@/stores/user'
+import recipeService from 'src/services/recipe'
+import { useUserStore } from 'stores/user'
 
 const emit = defineEmits(['saved'])
 

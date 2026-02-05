@@ -98,12 +98,12 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useQuasar } from 'quasar'
-import { useUserStore } from '@/stores/user'
-import articleService from '@/services/article'
-import ArticleEditDialog from '@/components/ArticleEditDialog.vue'
-import ArticleCommentDialog from '@/components/ArticleCommentDialog.vue'
-import ArticleCard from '@/components/ArticleCard.vue'
-import ArticleLeaderboard from '@/components/ArticleLeaderboard.vue'
+import { useUserStore } from 'stores/user'
+import articleService from 'src/services/article'
+import ArticleEditDialog from 'components/ArticleEditDialog.vue'
+import ArticleCommentDialog from 'components/ArticleCommentDialog.vue'
+import ArticleCard from 'components/ArticleCard.vue'
+import ArticleLeaderboard from 'components/ArticleLeaderboard.vue'
 
 const categoryOptions = [
   { label: '所有文章', icon: 'feed' },

@@ -1,4 +1,4 @@
-import { api, apiAuth } from '@/boot/axios'
+import { api, apiAuth } from 'boot/axios'
 
 export default {
   createComment: (data) => {

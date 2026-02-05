@@ -1,4 +1,4 @@
-import { apiAuth } from '@/boot/axios'
+import { apiAuth } from 'boot/axios'
 
 export default {
   createMission: (data) => {

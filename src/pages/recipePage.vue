@@ -68,10 +68,10 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import recipeService from '@/services/recipe'
+import recipeService from 'src/services/recipe'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
-import RecipeCard from '@/components/RecipeCard.vue'
+import RecipeCard from 'components/RecipeCard.vue'
 
 const search = ref('')
 const activeCategory = ref('All')

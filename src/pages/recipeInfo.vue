@@ -44,13 +44,13 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import serviceRecipe from '@/services/recipe'
-import serviceUser from '@/services/user'
+import serviceRecipe from 'src/services/recipe'
+import serviceUser from 'src/services/user'
 import { useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
-import { useUserStore } from '@/stores/user'
-import RecipeContent from '@/components/RecipeContent.vue'
-import CommentSection from '@/components/CommentSection.vue'
+import { useUserStore } from 'stores/user'
+import RecipeContent from 'components/RecipeContent.vue'
+import CommentSection from 'components/CommentSection.vue'
 
 const user = useUserStore()
 const info = ref({

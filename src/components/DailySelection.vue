@@ -14,8 +14,8 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-import { useRecipeStore } from '@/stores/recipe'
-import RecipeCard from '@/components/RecipeCard.vue'
+import { useRecipeStore } from 'stores/recipe'
+import RecipeCard from 'components/RecipeCard.vue'
 
 const router = useRouter()
 const recipeStore = useRecipeStore()

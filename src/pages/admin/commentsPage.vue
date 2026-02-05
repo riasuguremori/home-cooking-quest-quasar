@@ -30,7 +30,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
-import commentService from '@/services/comment'
+import commentService from 'src/services/comment'
 
 const $q = useQuasar()
 const comments = ref([])

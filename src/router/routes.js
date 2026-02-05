@@ -5,35 +5,35 @@ const routes = [
     children: [
       {
         path: '',
-        component: () => import('@/pages/IndexPage.vue'),
+        component: () => import('pages/IndexPage.vue'),
         meta: {
           title: '首頁',
         },
       },
       {
         path: 'userProfile',
-        component: () => import('@/pages/profilePage.vue'),
+        component: () => import('pages/profilePage.vue'),
         meta: {
           title: '會員中心',
         },
       },
       {
         path: 'recipes',
-        component: () => import('@/pages/recipePage.vue'),
+        component: () => import('pages/recipePage.vue'),
         meta: {
           title: '精選食譜',
         },
       },
       {
         path: 'articles',
-        component: () => import('@/pages/articlePage.vue'),
+        component: () => import('pages/articlePage.vue'),
         meta: {
           title: '廚藝分享',
         },
       },
       {
         path: 'recipes/:id',
-        component: () => import('@/pages/recipeInfo.vue'),
+        component: () => import('pages/recipeInfo.vue'),
         meta: {
           title: '首頁',
         },

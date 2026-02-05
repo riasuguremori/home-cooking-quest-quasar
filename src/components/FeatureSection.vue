@@ -46,7 +46,7 @@
 <script setup>
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from 'stores/user'
 
 const $q = useQuasar()
 const router = useRouter()
