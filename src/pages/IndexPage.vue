@@ -16,7 +16,7 @@
       class="bg-grey-2 text-white rounded-xl shadow-2 overflow-hidden"
     >
       <q-carousel-slide name="style" class="column no-wrap flex-center q-pa-none relative-position">
-        <q-img src="src/assets/banner01.webp" class="absolute-full" fit="cover" />
+        <q-img :src="banner01" class="absolute-full" fit="cover" />
 
         <div class="absolute-full flex column flex-center">
           <div class="text-h2 text-weight-bold q-mb-md text-shadow">探索私房美味</div>
@@ -37,7 +37,7 @@
       <div class="row">
         <div class="col-12 col-md-6 relative-position">
           <q-img
-            src="src/assets/banner02.webp"
+            :src="banner02"
             :class="{ 'absolute-full': $q.screen.gt.sm }"
             style="min-height: 400px"
             fit="cover"
@@ -98,6 +98,9 @@ import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 import DailySelection from 'components/DailySelection.vue'
 import FeatureSection from 'components/FeatureSection.vue'
+
+const banner01 = new URL('src/assets/banner01.webp', import.meta.url).href
+const banner02 = new URL('src/assets/banner02.webp', import.meta.url).href
 
 const $q = useQuasar()
 const slide = ref('style')
