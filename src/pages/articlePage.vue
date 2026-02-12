@@ -49,28 +49,23 @@
           </div>
           <q-separator class="q-mb-md" color="orange-2" />
 
-          <ArticleCard
-            v-for="article in paginatedArticles"
-            :key="article._id"
-            :article="article"
-            @edit="openDialog"
-            @delete="handleDelete"
-            @like="handleLike"
-            @comment="openCommentDialog"
-            @share="handleShare"
-          />
-
-          <div class="row justify-center q-mt-md" v-if="totalPages > 1">
-            <q-pagination
-              v-model="currentPage"
-              :max="totalPages"
-              :max-pages="6"
-              boundary-numbers
-              direction-links
-              color="deep-orange"
-              active-color="deep-orange"
+          <q-virtual-scroll
+            :items="filteredArticles"
+            v-slot="{ item: article }"
+            class="full-width"
+            scroll-target="window"
+            :virtual-scroll-item-size="450"
+          >
+            <ArticleCard
+              :key="article._id"
+              :article="article"
+              @edit="openDialog"
+              @delete="handleDelete"
+              @like="handleLike"
+              @comment="openCommentDialog"
+              @share="handleShare"
             />
-          </div>
+          </q-virtual-scroll>
         </div>
 
         <div class="col-12 col-md-3 gt-sm">
@@ -96,7 +91,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useUserStore } from 'stores/user'
 import articleService from 'src/services/article'
@@ -139,9 +134,6 @@ const commentDialog = ref({
   articleId: '',
 })
 
-const currentPage = ref(1)
-const itemsPerPage = 10
-
 const filteredArticles = computed(() => {
   return articles.value.filter((article) => {
     const matchesCategory =
@@ -152,17 +144,6 @@ const filteredArticles = computed(() => {
       (article.content && article.content.toLowerCase().includes(search.value.toLowerCase()))
     return matchesCategory && matchesSearch
   })
-})
-
-const totalPages = computed(() => Math.ceil(filteredArticles.value.length / itemsPerPage))
-
-const paginatedArticles = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage
-  return filteredArticles.value.slice(start, start + itemsPerPage)
-})
-
-watch([selectedCategory, search], () => {
-  currentPage.value = 1
 })
 
 const leaderboard = computed(() => {
